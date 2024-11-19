@@ -45,7 +45,7 @@ const Collections = () => {
         <Button className="bg-blue-1 text-white" onClick= {() => router.push("/collections/new")}>
         {/* Plus: Biểu tượng dấu cộng hiển thị trước chữ "Create Collection". */}
           <Plus className="h-4 w-4 mr-2" />
-          Create Collection
+          Tạo bộ sưu tập
         </Button>
 
       </div>

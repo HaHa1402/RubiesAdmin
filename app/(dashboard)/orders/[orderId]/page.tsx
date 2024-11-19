@@ -8,6 +8,14 @@ const OrderDetails = async ({ params }: { params: { orderId: string }}) => {
 
   const { street, city, state, postalCode, country } = orderDetails.shippingAddress
 
+  // Hàm để định dạng số tiền theo định dạng tiền Việt
+const formatCurrency = (amount: number) => {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount);
+};
+
   return (
     <div className="flex flex-col p-10 gap-5">
       <p className="text-base-bold">
@@ -20,7 +28,7 @@ const OrderDetails = async ({ params }: { params: { orderId: string }}) => {
       Địa chỉ giao hàng: <span className="text-base-medium">{street}, {city}, {state}, {postalCode}, {country}</span>
       </p>
       <p className="text-base-bold">
-      Tổng số tiền đã thanh toán: <span className="text-base-medium">${orderDetails.totalAmount}</span>
+        Tổng số tiền đã thanh toán: <span className="text-base-medium">{formatCurrency(orderDetails.totalAmount*100)}</span>
       </p>
       <p className="text-base-bold">
       Mã phí vận chuyển: <span className="text-base-medium">{orderDetails.shippingRate}</span>

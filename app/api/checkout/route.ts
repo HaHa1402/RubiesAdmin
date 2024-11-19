@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
                                 ...(cartItem.color && { color: cartItem.color }),
                             },
                         },
-                        unit_amount: Math.round(cartItem.item.price*1 ), // làm tròn để tránh lỗi
+                        unit_amount: Math.round(cartItem.item.price * 1 ), // làm tròn để tránh lỗi
                     },
                     quantity: cartItem.quantity,
                 };
