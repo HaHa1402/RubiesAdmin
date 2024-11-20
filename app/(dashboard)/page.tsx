@@ -28,11 +28,11 @@ export default async function Home() {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-10">
         <Card>
           <CardHeader className="flex flex-row justify-between items-center">
-            <CardTitle>Tổng doanh thu</CardTitle>
-            <CircleDollarSign className="max-sm:hidden" />
+            <CardTitle>Tổng doanh thu (VNĐ)</CardTitle>
+            {/* <CircleDollarSign className="max-sm:hidden" /> */}
           </CardHeader>
           <CardContent>
-            <p className="text-body-bold"> {totalRevenue} (đ)</p>
+            <p className="text-body-bold"> {totalRevenue} </p>
           </CardContent>
         </Card>
 
@@ -59,7 +59,7 @@ export default async function Home() {
 
       <Card className="mt-10">
         <CardHeader>
-          <CardTitle>Biểu đồ doanh thu (Đ)</CardTitle>
+          <CardTitle>Biểu đồ doanh thu (VNĐ)</CardTitle>
         </CardHeader>
         <CardContent>
           <SalesChart data={graphData} />

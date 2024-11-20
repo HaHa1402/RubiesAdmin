@@ -2,6 +2,14 @@ import Customer from "../models/Customer";
 import Order from "../models/Order";
 import { connectToDB } from "../mongoDB";
 
+  // Hàm để định dạng số tiền theo định dạng tiền Việt
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("vi-VN", {
+      style: "currency",
+      currency: "VND",
+    }).format(amount);
+  };
+
 // Tính tổng số đơn hàng và tổng doanh thu từ các đơn hàng.
 export const getTotalSales = async () => {
   await connectToDB();
@@ -10,8 +18,11 @@ export const getTotalSales = async () => {
   // Tính tổng số lượng đơn hàng
   const totalOrders = orders.length;
   // Tính tổng doanh thu
-  const totalRevenue = orders.reduce((acc, order) => acc + order.totalAmount, 0);
-  return { totalOrders, totalRevenue };
+  const totalRevenue = orders.reduce((acc, order) => acc + (order.totalAmount * 100), 0);
+
+  // Định dạng tổng doanh thu thành tiền Việt
+  const formattedRevenue = formatCurrency(totalRevenue);
+  return { totalOrders, totalRevenue: formattedRevenue };
 };
 
 // Đếm tổng số khách hàng.
@@ -28,11 +39,11 @@ export const getSalesPerMonth = async () => {
   await connectToDB();
   const orders = await Order.find();
 
-  // Tính doanh thu theo tháng(x)
-  const salesPerMonth = orders.reduce((acc, order) => {
+   // Tính doanh thu theo tháng
+   const salesPerMonth = orders.reduce((acc, order) => {
     const monthIndex = new Date(order.createdAt).getMonth();
-    acc[monthIndex] = (acc[monthIndex] || 0) + order.totalAmount;
-    // acc[monthIndex] = (acc[monthIndex] || 0) + 1;
+    // Nhân thêm 100 để chuyển từ đơn vị gốc (30000) thành (3,000,000)
+    acc[monthIndex] = (acc[monthIndex] || 0) + order.totalAmount * 100;
     return acc;
   }, {});
 
